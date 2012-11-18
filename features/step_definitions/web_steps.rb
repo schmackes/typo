@@ -139,6 +139,33 @@ When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
   attach_file(field, File.expand_path(path))
 end
 
+
+# my additional methods
+When /^I have an article (.*) from (.*) with text "(.*)" with id "(.*)"$/ do |title,author,text,id|
+  Article.create!(:allow_comments => true,
+                  :allow_pings => true,
+                  :author => author, #"Mr Typo",
+                  :body => text, #"Welcome to Typo. This is your first article. Edit or delete it, then start blogging!",
+                  #:guid => "1bf3e2ca-ed7b-4562-8a4a-8ce8438822c8",
+                  :id => id.to_i, #article id
+                  :permalink => title, #"hello-world",
+                  :post_type => "read",
+                  :published => true,
+                  :published_at => "2012-06-09 21:51:55 UTC",
+                  :settings => {"password"=>nil},
+                  :state => "published",
+                  :text_filter_id => 5,
+                  :title => title, #"Hello World!",
+                  :type => "Article",
+                  :user_id => 2 #user id of non-admin
+                  )
+end
+
+
+##############################
+#         THEN
+##############################
+
 Then /^(?:|I )should see "([^"]*)"$/ do |text|
   if page.respond_to? :should
     page.should have_content(text)
