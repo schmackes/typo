@@ -44,13 +44,13 @@ Given /^the blog is set up$/ do
   # add non-admin for test cases
   User.create!({:login => 'nonadmin',
                 :password => 'aaaaaaaa',
-                :email => 'joe@snow.com',
+                :email => 'nonadmin@snow.com',
                 :profile_id => 2,
                 :name => 'nonadmin',
                 :state => 'active'})
 end
 
-And /^I am logged into the admin panel (as .*)$/ do |username|
+And /^I am logged into the admin panel(.*)$/ do |non_admin_user|
   visit '/accounts/login'
 
   if non_admin_user
