@@ -8,7 +8,8 @@ Feature: Merge article
     And I am logged into the admin panel as non-admin
   
   Scenario: A non-admin cannot merge two articles
-   Given I am on the admin content page
-   And I have an article Welcome_to_Zurich
-   When I follow Welcome_to_Zurich
-   Then I should not see "Merge Articles" #maybe better with ID
+   Given I have an article "Welcome to Zurich" from "Markus" with text "It is so nice in ZH."
+   And I am on the admin content page
+   When I follow "Welcome to Zurich"
+   Then I should not see "merge_with"
+   And I should not see "Merge Articles"

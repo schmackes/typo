@@ -141,24 +141,26 @@ end
 
 
 # my additional methods
-When /^I have an article (.*) from (.*) with text "(.*)" with id "(.*)"$/ do |title,author,text,id|
-  Article.create!(:allow_comments => true,
+When /^I have an article "(.*)" from "(.*)" with text "(.*)"$/ do |title,author,text|
+
+  Article.create!(:author=>author, :title=>title, :body=>text, :user_id=>2, :type=>"Article",
+                :allow_comments => true,
                   :allow_pings => true,
-                  :author => author, #"Mr Typo",
-                  :body => text, #"Welcome to Typo. This is your first article. Edit or delete it, then start blogging!",
-                  #:guid => "1bf3e2ca-ed7b-4562-8a4a-8ce8438822c8",
-                  :id => id.to_i, #article id
-                  :permalink => title, #"hello-world",
+                  :permalink => "hello-world",
                   :post_type => "read",
                   :published => true,
                   :published_at => "2012-06-09 21:51:55 UTC",
                   :settings => {"password"=>nil},
                   :state => "published",
-                  :text_filter_id => 5,
-                  :title => title, #"Hello World!",
-                  :type => "Article",
-                  :user_id => 2 #user id of non-admin
+                  :text_filter_id => 5
                   )
+
+  #art=Article.find_by_title(title)
+end
+
+When /^I calculate and fill in "(.*)" with "(.*)"$/ do |link,title|
+  value=Article.find_by_title(title).id
+  step %{I fill in "#{link}" with "#{value}"}
 end
 
 
