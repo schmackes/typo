@@ -80,7 +80,18 @@ class Article < Content
     if @with_article
       self.body=self.body+@with_article.body
       self.save
+
+      # take over comments from other article
+      #TBD
+
+      # leave current author as author -> do nothing
+      # leave title from the first article -> do nothing
+
+      # delete other article
+      #TBD
     end
+
+
   end
 
   def set_permalink
