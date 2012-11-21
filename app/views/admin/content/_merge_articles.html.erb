@@ -1,5 +1,5 @@
 <h4>Merge Articles</h4>
 <%= form_tag('/admin/content/merge/'+@article.id.to_s, :method=>:get) do -%>
-  <%= number_field_tag 'article_merge_id', nil, :id=>"merge_with" %>
+  <%= number_field_tag 'article_merge_id', nil, :name=>"merge_with" %>
   <%= submit_tag 'Merge With This Article' %>
 <% end -%>
