@@ -52,8 +52,9 @@ end
 
 And /^I am logged into the admin panel(.*)$/ do |non_admin_user|
   visit '/accounts/login'
+  p "non_admin_user:"+non_admin_user.to_s
 
-  if non_admin_user
+  if non_admin_user and non_admin_user.strip.size > 0
     fill_in 'user_login', :with => 'nonadmin'
   else
     fill_in 'user_login', :with => 'admin'
@@ -159,6 +160,7 @@ When /^I have an article "(.*)" from "(.*)" with text "(.*)"$/ do |title,author,
 end
 
 When /^I calculate and fill in "(.*)" with "(.*)"$/ do |link,title|
+  p page.body
   value=Article.find_by_title(title).id
   step %{I fill in "#{link}" with "#{value}"}
 end

@@ -29,6 +29,8 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def edit
+    p "entering edit"
+
     @article = Article.find(params[:id])
     unless @article.access_by? current_user
       redirect_to :action => 'index'
@@ -40,8 +42,7 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def merge
-     @user_is_admin=self.is_admin(session[:user_id])
-#    p "user is admin:"+@user_is_admin.to_s
+    check_if_render_merging_feature
 
     @article=Article.find(params[:id])
     @article_id_to_be_merged_in=params[:article_merge_id]
@@ -69,17 +70,19 @@ class Admin::ContentController < Admin::BaseController
     p "param:"+params.to_s
     p "param[:action]: "+params[:action]
     p ":edit.to_s: "+:edit.to_s
-    if is_admin(session[:user_id]) and params[:action]==:edit.to_s
-      p "true"
+    if is_admin and params[:action]==:edit.to_s
       @render_merging_features=true
     end
 
   end
 
-  def is_admin(user_id)
-    user=User.find(user_id)
+  def is_admin
+    #user=User.find(user_id)
 
-    if (user && user.profile.label=='admin')
+    p "current_user:"+current_user.to_s
+    #p "user:"+user.to_s
+    p "current_user.profile.label:"+current_user.profile.label.to_s
+    if (current_user && current_user.profile.label=='admin')
       return true
      else
       return false
