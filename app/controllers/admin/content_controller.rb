@@ -45,7 +45,7 @@ class Admin::ContentController < Admin::BaseController
     check_if_render_merging_feature
 
     @article=Article.find(params[:id])
-    @article_id_to_be_merged_in=params[:article_merge_id]
+    @article_id_to_be_merged_in=params[:merge_with]
 
     @article.merge_with(@article_id_to_be_merged_in)
     redirect_to :action => 'index'

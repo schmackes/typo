@@ -62,11 +62,13 @@ describe Article do
     @comment22.save
 
     # trigger merging
-    @article1.merge_with(@article2.id)
+   # print_test_start
+   @article1.merge_with(@article2.id)
   end
 
 
-  it "should output my test objects" do
+  def print_test_start(mark="#")
+    p "################################################## "+mark+"##################################################*"
     p "**********Users**********"
     p @admin
     p @nonadmin
@@ -78,6 +80,8 @@ describe Article do
     p "**********Comments**********"
     p @comment11
     p @comment12
+    p @comment21
+    p @comment22
     p "*************************"
     p "********** Comments for article **********"
     p @article1.comments
@@ -99,11 +103,15 @@ describe Article do
   end
 
   it "should have all comments on the first article if articles are merged." do
-    pending
+    comment_array=Array[@comment11, @comment12, @comment21, @comment22]
+    print_test_start("comment test")
+    assert_equal @article1.comments.size, comment_array.size
+    assert_equal @article1.comments, comment_array
   end
 
-  it "should have no comment on the second article if articles are merged" do
-    pending
+  it "the second article should be deleted after merging" do
+    lambda { Article.find(@article2.id) }.should raise_error
+    #assert_equal Article.find(@article2.id), nil
   end
 
 

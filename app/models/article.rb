@@ -75,20 +75,29 @@ class Article < Content
   # added merging of articles
   def merge_with(article_id)
     @with_article=Article.find(article_id) if article_id
+    p "entering merge_with:"+article_id+@with_article.to_s
 
     #merge content
     if @with_article
       self.body=self.body+@with_article.body
-      self.save
+      p self.body.to_s
 
       # take over comments from other article
-      #TBD
+      @with_article.comments.each do |comment|
+        self.comments << comment
+      end
+      self.save
 
       # leave current author as author -> do nothing
       # leave title from the first article -> do nothing
 
       # delete other article
-      #TBD
+      #@with_article.comments=[]
+      #@with_article.save
+
+      #reload article to avoid deletion of "old" comments when article is destroyed
+      #@with_article=Article.find(article_id)
+      @with_article.delete
     end
 
 
