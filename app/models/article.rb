@@ -74,7 +74,7 @@ class Article < Content
 
   # added merging of articles
   def merge_with(article_id)
-    @with_article=Article.find(article_id)
+    @with_article=Article.find(article_id) if article_id
 
     #merge content
     if @with_article
