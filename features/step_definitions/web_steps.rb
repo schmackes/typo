@@ -165,6 +165,11 @@ When /^I calculate and fill in "(.*)" with "(.*)"$/ do |link,title|
   step %{I fill in "#{link}" with "#{value}"}
 end
 
+When /^I have a category "(.*)"$/ do |category_name|
+  Category.create!(:name=>category_name, :permalink=>"dummylink")
+end
+
+
 
 ##############################
 #         THEN
